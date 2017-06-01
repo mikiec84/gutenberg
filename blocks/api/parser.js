@@ -64,7 +64,7 @@ export function getBlockAttributes( blockType, rawContent, attributes ) {
 /**
  * Creates a block with fallback to the unknown type handler.
  *
- * @param  {?String} name       Block type slug
+ * @param  {?String} name       Block type name
  * @param  {String}  rawContent Raw block content
  * @param  {?Object} attributes Attributes obtained from block delimiters
  * @return {?Object}            An initialized block object (if possible)
@@ -105,14 +105,14 @@ export function parseWithTinyMCE( content ) {
 	// First, convert comment delimiters into temporary <wp-block> "tags" so
 	// that TinyMCE can parse them.  Examples:
 	//   In  : <!-- wp:core/text -->
-	//   Out : <wp-block slug="core/text">
+	//   Out : <wp-block name="core/text">
 	//   In  : <!-- /wp:core/text -->
 	//   Out : </wp-block>
 	//   In  : <!-- wp:core/embed url:youtube.com/xxx& -->
-	//   Out : <wp-block slug="core/embed" attributes="url:youtube.com/xxx&amp;">
+	//   Out : <wp-block name="core/embed" attributes="url:youtube.com/xxx&amp;">
 	content = content.replace(
 		/<!--\s*(\/?)wp:([a-z0-9/-]+)((?:\s+[a-z0-9_-]+(="[^"]*")?)*)\s*-->/g,
-		function( match, closingSlash, slug, attributes ) {
+		function( match, closingSlash, name, attributes ) {
 			if ( closingSlash ) {
 				return '</wp-block>';
 			}
@@ -120,7 +120,7 @@ export function parseWithTinyMCE( content ) {
 			if ( attributes ) {
 				attributes = ' attributes="' + escape( attributes.trim() ) + '"';
 			}
-			return '<wp-block slug="' + slug + '"' + attributes + '>';
+			return '<wp-block name="' + name + '"' + attributes + '>';
 		}
 	);
 
@@ -131,7 +131,7 @@ export function parseWithTinyMCE( content ) {
 	schema.addCustomElements( 'wp-block' );
 
 	// Add valid <wp-block> "attributes" also.
-	schema.addValidElements( 'wp-block[slug|attributes]' );
+	schema.addValidElements( 'wp-block[name|attributes]' );
 
 	// Initialize the parser with our custom schema.
 	const parser = new tinymce.html.DomParser( { validate: true }, schema );
@@ -193,7 +193,7 @@ export function parseWithTinyMCE( content ) {
 
 			// Try to create the block.
 			const block = createBlockWithFallback(
-				nodeAttributes.slug,
+				nodeAttributes.name,
 				rawContent,
 				blockAttributes
 			);

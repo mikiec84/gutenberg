@@ -25,7 +25,7 @@ describe( 'block parser', () => {
 	afterEach( () => {
 		setUnknownTypeHandler( undefined );
 		getBlockTypes().forEach( ( block ) => {
-			unregisterBlockType( block.slug );
+			unregisterBlockType( block.name );
 		} );
 	} );
 

@@ -8,7 +8,7 @@
 const blocks = {};
 
 /**
- * Slug of block handling unknown types.
+ * Name of block handling unknown types.
  *
  * @type {?string}
  */
@@ -27,13 +27,13 @@ let unknownTypeHandler;
 export function registerBlockType( name, settings ) {
 	if ( typeof name !== 'string' ) {
 		console.error(
-			'Block slugs must be strings.'
+			'Block names must be strings.'
 		);
 		return;
 	}
 	if ( ! /^[a-z0-9-]+\/[a-z0-9-]+$/.test( name ) ) {
 		console.error(
-			'Block slugs must contain a namespace prefix. Example: my-plugin/my-custom-block'
+			'Block names must contain a namespace prefix. Example: my-plugin/my-custom-block'
 		);
 		return;
 	}

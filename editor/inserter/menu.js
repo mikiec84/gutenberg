@@ -57,9 +57,9 @@ class InserterMenu extends wp.element.Component {
 		} );
 	}
 
-	selectBlock( slug ) {
+	selectBlock( name ) {
 		return () => {
-			this.props.onSelect( slug );
+			this.props.onSelect( name );
 			this.setState( {
 				filterValue: '',
 				currentFocus: null,
@@ -105,23 +105,23 @@ class InserterMenu extends wp.element.Component {
 
 	findByIncrement( blockTypes, increment = 1 ) {
 		// Add on a fake search block to the list to cycle through.
-		const list = blockTypes.concat( { slug: 'search' } );
+		const list = blockTypes.concat( { name: 'search' } );
 
-		const currentIndex = findIndex( list, ( blockType ) => this.state.currentFocus === blockType.slug );
+		const currentIndex = findIndex( list, ( blockType ) => this.state.currentFocus === blockType.name );
 		const nextIndex = currentIndex + increment;
 		const highestIndex = list.length - 1;
 		const lowestIndex = 0;
 
 		if ( nextIndex > highestIndex ) {
-			return list[ lowestIndex ].slug;
+			return list[ lowestIndex ].name;
 		}
 
 		if ( nextIndex < lowestIndex ) {
-			return list[ highestIndex ].slug;
+			return list[ highestIndex ].name;
 		}
 
-		// Return the slug of the next block type.
-		return list[ nextIndex ].slug;
+		// Return the name of the next block type.
+		return list[ nextIndex ].name;
 	}
 
 	findNext( blockTypes ) {
@@ -129,7 +129,7 @@ class InserterMenu extends wp.element.Component {
 		 * null is the initial state value and triggers start at beginning.
 		 */
 		if ( null === this.state.currentFocus ) {
-			return blockTypes[ 0 ].slug;
+			return blockTypes[ 0 ].name;
 		}
 
 		return this.findByIncrement( blockTypes, 1 );
@@ -140,7 +140,7 @@ class InserterMenu extends wp.element.Component {
 		 * null is the initial state value and triggers start at beginning.
 		 */
 		if ( null === this.state.currentFocus ) {
-			return blockTypes[ 0 ].slug;
+			return blockTypes[ 0 ].name;
 		}
 
 		return this.findByIncrement( blockTypes, -1 );
