@@ -262,19 +262,19 @@ class InserterMenu extends wp.element.Component {
 									tabIndex="0"
 									aria-labelledby={ `editor-inserter__separator-${ category.slug }-${ this.instanceId }` }
 								>
-									{ visibleBlocksByCategory[ category.slug ].map( ( { slug, title, icon } ) => (
+									{ visibleBlocksByCategory[ category.slug ].map( ( block ) => (
 										<button
 											role="menuitem"
-											key={ slug }
+											key={ block.name }
 											className="editor-inserter__block"
-											onClick={ this.selectBlock( slug ) }
-											ref={ this.bindReferenceNode( slug ) }
+											onClick={ this.selectBlock( block.name ) }
+											ref={ this.bindReferenceNode( block.name ) }
 											tabIndex="-1"
 											onMouseEnter={ this.hoverBlock() }
 											onMouseLeave={ this.unhoverBlock() }
 										>
-											<Dashicon icon={ icon } />
-											{ title }
+											<Dashicon icon={ block.icon } />
+											{ block.title }
 										</button>
 									) ) }
 								</div>
