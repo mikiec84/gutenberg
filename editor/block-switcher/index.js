@@ -17,7 +17,8 @@ import './style.scss';
 import { replaceBlocks } from '../actions';
 import { getBlock } from '../selectors';
 
-class BlockSwitcher extends wp.element.Component {
+// Only exported for testing.
+export class BlockSwitcher extends wp.element.Component {
 	constructor() {
 		super( ...arguments );
 		this.toggleMenu = this.toggleMenu.bind( this );
