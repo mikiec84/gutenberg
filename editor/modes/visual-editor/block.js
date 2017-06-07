@@ -54,13 +54,12 @@ class VisualEditorBlock extends wp.element.Component {
 		this.mergeBlocks = this.mergeBlocks.bind( this );
 		this.onFocus = this.onFocus.bind( this );
 		this.onPointerDown = this.onPointerDown.bind( this );
-		this.onPointerMove = this.onPointerMove.bind( this );
-		this.onPointerUp = this.onPointerUp.bind( this );
 		this.previousOffset = null;
 	}
 
 	bindBlockNode( node ) {
 		this.node = node;
+		this.props.blockRef( node );
 	}
 
 	componentWillReceiveProps( newProps ) {
@@ -186,15 +185,6 @@ class VisualEditorBlock extends wp.element.Component {
 		this.props.onSelectionStart();
 	}
 
-	onPointerMove() {
-		this.props.onSelectionChange();
-		this.maybeHover();
-	}
-
-	onPointerUp() {
-		this.props.onSelectionEnd();
-	}
-
 	render() {
 		const { block, selectedBlocks } = this.props;
 		const blockType = wp.blocks.getBlockType( block.name );
@@ -240,10 +230,7 @@ class VisualEditorBlock extends wp.element.Component {
 				onFocus={ this.onFocus }
 				onMouseDown={ this.onPointerDown }
 				onTouchStart={ this.onPointerDown }
-				onMouseMove={ this.onPointerMove }
-				onTouchMove={ this.onPointerMove }
-				onMouseUp={ this.onPointerUp }
-				onTouchEnd={ this.onPointerUp }
+				onMouseMove={ this.maybeHover }
 				onMouseEnter={ this.maybeHover }
 				onMouseLeave={ onMouseLeave }
 				className={ className }
